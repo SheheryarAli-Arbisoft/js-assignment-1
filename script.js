@@ -199,10 +199,8 @@ function handleSubmit() {
     }
   }
 
-  // If any empty fields exists display a message
-  if (emptyFieldsCount > 0) {
-    alert('Please enter all the required fields');
-  } else if (passwordsMatch) {
+  // If there are no empty fields and passwords match
+  if (emptyFieldsCount === 0 && passwordsMatch) {
     const result = `Form submitted successfully!\n
       First Name: ${firstName.value}\n
       Last Name: ${lastName.value}\n
