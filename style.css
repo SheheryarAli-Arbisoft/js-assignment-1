@@ -54,6 +54,10 @@ body {
   margin-right: auto;
 }
 
+.container-normal {
+  padding: 85px 1.5rem;
+}
+
 .title {
   text-align: center;
   font-size: 3rem;

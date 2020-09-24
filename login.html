@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>JS Assignment 1</title>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <ul>
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item">
+          <a class="btn btn-primary-outline" href="login.html">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-secondary" href="sign-up.html">Sign up</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h1 class="title">Login</h1>
+
+      <div class="sub-title">
+        Please fill in the following information to login
+      </div>
+
+      <form onsubmit="return handleLogin();">
+        <div class="form-group">
+          <input
+            class="form-control"
+            type="text"
+            id="email"
+            placeholder="Email"
+          />
+          <div class="form-helper-text hidden">
+            Please enter a valid email address e.g. abc@example.com
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input
+            class="form-control"
+            type="password"
+            id="password"
+            placeholder="Password"
+          />
+          <div class="form-helper-text hidden">Please enter your password</div>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary form-button" type="submit">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+
+  <!-- Loading the scripts after the HTML has been loaded -->
+  <script src="./js/login-utils.js"></script>
+  <script src="./js/login.js"></script>
+</html>

@@ -11,6 +11,15 @@ for (let field of inputFields) {
 
 // This function handles the submit event when the form is submitted
 function handleSignUp() {
+  // Checking to see if the user accepted the agreements or not
+  const checkBox1 = document.getElementById('checkBox1');
+  const checkBox2 = document.getElementById('checkBox2');
+
+  if (!checkBox1.checked || !checkBox2.checked) {
+    alert('Please accept the aggrements');
+    return false;
+  }
+
   // Getting all the values from the form
   const firstName = document.getElementById('firstName');
   const lastName = document.getElementById('lastName');
@@ -122,7 +131,7 @@ function handleSignUp() {
     }
   }
 
-  // If there are no empty fields and passwords match
+  // If there are no invalid fields and passwords match
   if (invalidFieldsCount === 0 && genderValue > -1 && passwordsMatch) {
     const result = `Form submitted successfully!\n
       First Name: ${firstName.value}\n
