@@ -27,7 +27,7 @@
 
       <div class="sub-title">(Note: Fields marked with * are required)</div>
 
-      <form onsubmit="return handleSubmit();">
+      <form onsubmit="return handleSignUp();">
         <div class="form-group">
           <input
             class="form-control"
@@ -134,11 +134,43 @@
             Submit
           </button>
         </div>
+
+        <div class="form-group-check">
+          <input type="checkbox" id="checkBox1" class="form-check" />
+          <label for="checkBox1"
+            >By signing up, I agree to the Terms and Conditions and Privacy
+            Policy of Organization.</label
+          >
+        </div>
+
+        <div class="form-group-check">
+          <input type="checkbox" id="checkBox2" class="form-check" />
+          <label for="checkBox2"
+            >I agree with the usage of my personal data for the purpose of
+            marketing in line with the stipulated Privacy Policy.</label
+          >
+        </div>
       </form>
+
+      <div class="sub-title">OR</div>
+
+      <div class="form-group">
+        <a
+          href="https://facebook.com"
+          class="btn btn-primary form-button color-facebook anchor-button"
+          >Sign up with Facebook</a
+        >
+      </div>
+
+      <div class="form-group">
+        <div class="text-center">
+          Already have an account? <a href="login.html">Login</a>
+        </div>
+      </div>
     </div>
   </body>
 
   <!-- Loading the scripts after the HTML has been loaded -->
   <script src="./js/utils.js"></script>
-  <script src="./script.js"></script>
+  <script src="./js/sign-up.js"></script>
 </html>
