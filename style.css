@@ -28,6 +28,10 @@
   margin-bottom: 8px;
 }
 
+.form-check-label {
+  font-size: 1rem;
+}
+
 .form-control {
   width: 100%;
   box-sizing: border-box;
@@ -36,6 +40,10 @@
   border-style: solid;
   border-radius: 5px;
   border-width: 0.5px;
+}
+
+.form-check {
+  transform: scale(1.1);
 }
 
 .form-helper-text {

@@ -1,102 +1,12 @@
-// This function checks if a value is empty or not
-function isEmpty(field) {
-  if (field.value === '') {
-    return true;
-  }
-  return false;
-}
+const inputFields = document.getElementsByTagName('input');
 
-// This function marks the invalid field with a red color
-function markInvalid(field) {
-  field.style['borderColor'] = 'red';
-  field.nextElementSibling.style['color'] = 'red';
-
-  if (field.id !== 'password') {
-    field.nextElementSibling.classList.remove('hidden');
-  }
-}
-
-// This function removes the red border and color from invalid fields
-function markValid(field) {
-  field.style['borderColor'] = 'inherit';
-  field.nextElementSibling.style['color'] = 'inherit';
-
-  if (field.id !== 'password') {
-    field.nextElementSibling.classList.add('hidden');
-  }
-}
-
-// This function checks if the email is valid or not
-function isValidEmail(value) {
-  if (
-    /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(value)
-  ) {
-    return true;
-  }
-  return false;
-}
-
-// This function checks to see if card number is valid or not
-function isValidCardNumber(value) {
-  if (value.length === 16) {
-    for (let char of value) {
-      if (!/\d/.test(char)) {
-        return false;
-      }
-    }
-    return true;
-  }
-  return false;
-}
-
-// This function checks to see if password is valid or not
-function isValidPassword(value) {
-  if (value.length >= 8) {
-    if (
-      !/[a-zA-Z]+/.test(value) ||
-      !/[0-9]+/.test(value) ||
-      !/[\@\$\#]+/.test(value)
-    ) {
-      return false;
-    }
-    return true;
-  }
-  return false;
-}
-
-// This function returns the gender value
-function getGender(value) {
-  if (value == 0) {
-    return 'Male';
+// Attaching content change listeners to every text field
+for (let field of inputFields) {
+  if (field.type === 'radio') {
+    addOnCheckedListener(field.parentElement, field);
   } else {
-    return 'Female';
+    addContentChangeListener(field);
   }
-}
-
-// This function returns the formatted date of birth
-function getFormattedDob(value) {
-  const dateObj = new Date(value);
-
-  const date = dateObj.getDate();
-  const month = dateObj.getMonth();
-  const year = dateObj.getFullYear();
-
-  const monthNames = [
-    'JAN',
-    'FEB',
-    'MAR',
-    'APR',
-    'MAY',
-    'JUN',
-    'JUL',
-    'AUG',
-    'SEP',
-    'OCT',
-    'NOV',
-    'DEC',
-  ];
-
-  return `${date}-${monthNames[month]}-${year}`;
 }
 
 // This function handles the submit event when the form is submitted
@@ -105,18 +15,21 @@ function handleSubmit() {
   const firstName = document.getElementById('firstName');
   const lastName = document.getElementById('lastName');
   const email = document.getElementById('email');
-  const gender = document.getElementById('gender');
   const dob = document.getElementById('dob');
   const cardNumber = document.getElementById('cardNumber');
   const password = document.getElementById('password');
   const confirmPassword = document.getElementById('confirmPassword');
 
-  let emptyFieldsCount = 0;
+  const gender = document.getElementById('gender');
+  const male = gender.children[0];
+  const female = gender.children[2];
+
+  let invalidFieldsCount = 0;
 
   // Checking to see if the first name is entered or not
   if (isEmpty(firstName)) {
     markInvalid(firstName);
-    emptyFieldsCount++;
+    invalidFieldsCount++;
   } else {
     markValid(firstName);
   }
@@ -124,7 +37,7 @@ function handleSubmit() {
   // Checking to see if the last name is entered or not
   if (isEmpty(lastName)) {
     markInvalid(lastName);
-    emptyFieldsCount++;
+    invalidFieldsCount++;
   } else {
     markValid(lastName);
   }
@@ -132,7 +45,7 @@ function handleSubmit() {
   // Checking to see if the email is valid or not
   if (isEmpty(email)) {
     markInvalid(email);
-    emptyFieldsCount++;
+    invalidFieldsCount++;
   } else {
     if (!isValidEmail(email.value)) {
       markInvalid(email);
@@ -141,18 +54,26 @@ function handleSubmit() {
     }
   }
 
+  let genderValue = -1;
+
   // Checking to see if the gender is selected or not
-  if (isEmpty(gender)) {
+  if (!male.checked && !female.checked) {
     markInvalid(gender);
-    emptyFieldsCount++;
+    invalidFieldsCount++;
   } else {
     markValid(gender);
+
+    if (male.checked) {
+      genderValue = 0;
+    } else {
+      genderValue = 1;
+    }
   }
 
   // Checking to see if the dob is entered or not
   if (isEmpty(dob)) {
     markInvalid(dob);
-    emptyFieldsCount++;
+    invalidFieldsCount++;
   } else {
     markValid(dob);
   }
@@ -160,10 +81,11 @@ function handleSubmit() {
   // Checking to see if the card number is valid or not
   if (isEmpty(cardNumber)) {
     markInvalid(cardNumber);
-    emptyFieldsCount++;
+    invalidFieldsCount++;
   } else {
     if (!isValidCardNumber(cardNumber.value)) {
       markInvalid(cardNumber);
+      invalidFieldsCount++;
     } else {
       markValid(cardNumber);
     }
@@ -172,10 +94,11 @@ function handleSubmit() {
   // Checking to see if the password is valid or not
   if (isEmpty(password)) {
     markInvalid(password);
-    emptyFieldsCount++;
+    invalidFieldsCount++;
   } else {
     if (!isValidPassword(password.value)) {
       markInvalid(password);
+      invalidFieldsCount++;
     } else {
       markValid(password);
     }
@@ -186,7 +109,7 @@ function handleSubmit() {
   // Checking to see if the confirm password is valid or not
   if (isEmpty(confirmPassword)) {
     markInvalid(confirmPassword);
-    emptyFieldsCount++;
+    invalidFieldsCount++;
   } else {
     markValid(confirmPassword);
 
@@ -200,12 +123,12 @@ function handleSubmit() {
   }
 
   // If there are no empty fields and passwords match
-  if (emptyFieldsCount === 0 && passwordsMatch) {
+  if (invalidFieldsCount === 0 && genderValue > -1 && passwordsMatch) {
     const result = `Form submitted successfully!\n
       First Name: ${firstName.value}\n
       Last Name: ${lastName.value}\n
       Email: ${email.value}\n
-      Gender: ${getGender(gender.value)}\n
+      Gender: ${getGender(genderValue)}\n
       Date of Birth: ${getFormattedDob(dob.value)}\n
       Credit Card Number: ${cardNumber.value}\n
       Password: ${password.value}\n
