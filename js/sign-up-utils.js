@@ -33,14 +33,14 @@ function markValid(field) {
 }
 
 // This function checks if the email is valid or not
-function isValidEmail(value) {
+const isValidEmail = (value) => {
   if (
     /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(value)
   ) {
     return true;
   }
   return false;
-}
+};
 
 // This function checks to see if card number is valid or not
 function isValidCardNumber(value) {
